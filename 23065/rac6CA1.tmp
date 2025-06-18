@@ -15,7 +15,7 @@ texture = ExtResource("2_i8jd8")
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(-32, 155)
 position_smoothing_enabled = true
-position_smoothing_speed = 1.0
+position_smoothing_speed = 10.0
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 position = Vector2(-25, 81)
