@@ -9,8 +9,30 @@ var oncooldown = false
 
 var sprinting = false
 
+var combo = 0
+
+func docombo():
+	if Input.is_action_just_pressed("Space") and sprinting == false:
+		if combo == 1:
+			await get_tree().create_timer(1).timeout
+			if combo == 1:
+				combo = 0
+		elif combo == 2:
+			await get_tree().create_timer(1).timeout
+			if combo == 2:
+				combo = 0
+		elif combo == 3:
+			await get_tree().create_timer(1).timeout
+			if combo == 3:
+				combo = 0
+		else:
+			pass
+	
+	
+
 func _physics_process(delta):
 	# Add gravity every frame
+	
 	velocity.y += gravity * delta
 	
 	if Input.is_action_pressed("Shift"):
@@ -35,15 +57,35 @@ func Cooldown(time):
 	await get_tree().create_timer(time).timeout
 	oncooldown = false
 	
+func attack():
 	
+	if Input.is_action_just_pressed("Space") and sprinting == false:
+		print(combo)
+		if combo == 0:
+			Global.Rackattack = 1
+			combo = 1
+		elif combo == 1:
+			Global.Rackattack = 2
+			combo = 2
+		elif combo == 2:
+			Global.Rackattack = 3
+			combo = 3
+		elif combo == 3:
+			Global.Rackattack = 4
+			combo = 4
+		elif combo == 4:
+			combo = 0
+			await get_tree().create_timer(0.5).timeout
+		
 	
 
 
-func Die():
+
+func  _process(_delta):
+	attack()
+	docombo()
+	
+	if Global.Health == 0 or Global.Health <= 0:
 		%Rack.position.x = Global.CheckpointX
 		%Rack.position.y = Global.CheckpointY
 		Global.Health = 100
-func  _process(delta):
-	 
-	if Global.Health == 0 or Global.Health <= 0:
-		Die()
